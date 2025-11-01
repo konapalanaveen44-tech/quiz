@@ -166,7 +166,7 @@ onAuthStateChanged(auth, async (user) => {
 
     } else {
         // User is signed out
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 });
 
@@ -175,7 +175,7 @@ logoutButton.addEventListener('click', (e) => {
     e.preventDefault();
     signOut(auth).then(() => {
         console.log('User signed out.');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }).catch((error) => {
         console.error('Sign out error:', error);
     });

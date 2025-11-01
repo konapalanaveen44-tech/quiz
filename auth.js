@@ -21,7 +21,7 @@ onAuthStateChanged(auth, (user) => {
         console.log('User is logged in, redirecting to dashboard.');
         // Check if we are not already on a dashboard/profile page to avoid redirect loops
         if (window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html')) {
-            window.location.href = 'profile.html';
+            window.location.href = 'index.html';
         }
     } else {
         console.log('User is not logged in.');
@@ -41,7 +41,7 @@ if (loginForm) {
                 // Signed in 
                 const user = userCredential.user;
                 console.log('User logged in:', user);
-                window.location.href = 'profile.html'; // Redirect to profile
+                window.location.href = 'index.html'; // Redirect to profile
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -85,7 +85,7 @@ if (registerForm) {
             });
 
             console.log('User created and data saved to Firestore.');
-            window.location.href = 'profile.html'; // Redirect after all operations are successful
+            window.location.href = 'index.html'; // Redirect after all operations are successful
         } catch (error) {
             const errorMessage = error.message;
             alert(`Registration Error: ${errorMessage}`);
@@ -122,7 +122,7 @@ if (googleSignInButton) {
                 });
             }
             console.log('Google sign-in successful:', user);
-            window.location.href = 'profile.html';
+            window.location.href = 'index.html';
         } catch (error) {
             const errorMessage = error.message;
             alert(`Google Sign-In Error: ${errorMessage}`);
@@ -159,7 +159,7 @@ if (facebookSignInButton) {
                 });
             }
             console.log('Facebook sign-in successful:', user);
-            window.location.href = 'profile.html';
+            window.location.href = 'index.html';
         } catch (error) {
             if (error.code === 'auth/account-exists-with-different-credential') {
                 alert('An account already exists with the same email address. Please sign in with the original method.');

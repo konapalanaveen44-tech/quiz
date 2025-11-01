@@ -39,7 +39,7 @@ onAuthStateChanged(auth, async (user) => {
             avatarPreview.style.backgroundImage = `url('${user.photoURL || defaultAvatar}')`;
         }
     } else {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 });
 
@@ -68,7 +68,7 @@ form.addEventListener('submit', async (e) => {
 
         successMessage.classList.remove('hidden');
         setTimeout(() => {
-            window.location.href = 'profile.html';
+            window.location.href = 'index.html';
         }, 1500); // Redirect back to profile after 1.5 seconds
 
     } catch (error) {
@@ -77,4 +77,4 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
-if (logoutButton) logoutButton.addEventListener('click', () => signOut(auth).then(() => window.location.href = 'login.html'));
+if (logoutButton) logoutButton.addEventListener('click', () => signOut(auth).then(() => window.location.href = 'index.html'));
