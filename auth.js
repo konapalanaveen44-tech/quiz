@@ -20,7 +20,7 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         console.log('User is logged in, redirecting to dashboard.');
         // Check if we are not already on a dashboard/profile page to avoid redirect loops
-        if (window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html')) {
+        if (window.location.pathname.includes('index.html') || window.location.pathname.includes('register.html')) {
             window.location.href = 'profile.html';
         }
     } else {

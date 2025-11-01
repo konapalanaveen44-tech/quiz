@@ -169,7 +169,7 @@ onAuthStateChanged(auth, async (user) => {
     } else {
         // User is signed out
         console.log('User is not logged in. Redirecting to login page.');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 });
 
@@ -180,7 +180,7 @@ if (logoutButton) {
         signOut(auth).then(() => {
             // Sign-out successful.
             console.log('User signed out.');
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         }).catch((error) => {
             // An error happened.
             console.error('Sign out error:', error);

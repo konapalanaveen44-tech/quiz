@@ -32,7 +32,7 @@ onAuthStateChanged(auth, (user) => {
         loadQuestion();
         startTimer();
     } else {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 });
 
