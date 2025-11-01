@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>User Dashboard - Quiz App</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2A4D8E", // Mapped from user request
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark">
+    <div class="relative flex min-h-screen w-full">
+        <!-- SideNavBar -->
+        <aside
+            class="sticky top-0 h-screen w-64 bg-white dark:bg-[#1C2431] flex flex-col p-4 border-r border-gray-200 dark:border-gray-700">
+            <div class="flex items-center gap-3 mb-8 px-2">
+                <div class="text-white bg-primary rounded-lg p-2">
+                    <span class="material-symbols-outlined">quiz</span>
+                </div>
+                <h1 class="text-gray-900 dark:text-white text-xl font-bold leading-tight">QuizUp</h1>
+            </div>
+            <div class="flex flex-col gap-2 flex-grow">
+                <a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg" href="dashboard.html">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <p class="text-sm font-medium leading-normal">Dashboard</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg" href="activity_history.html">
+                    <span class="material-symbols-outlined">history</span>
+                    <p class="text-sm font-medium leading-normal">Quiz History</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="profile.html">
+                    <span class="material-symbols-outlined">person</span>
+                    <p class="text-sm font-medium leading-normal">Profile Details</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg"
+                    href="#">
+                    <span class="material-symbols-outlined">settings</span>
+                    <p class="text-sm font-medium leading-normal">Settings</p>
+                </a>
+            </div>
+            <div class="flex flex-col gap-1">
+                <a id="logout-button"
+                    class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg"
+                    href="#">
+                    <span class="material-symbols-outlined">logout</span>
+                    <p class="text-sm font-medium leading-normal">Logout</p>
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 p-8 grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div class="xl:col-span-2 flex flex-col gap-8">
+                <!-- PageHeading -->
+                <div>
+                    <h1 id="welcome-message" class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-tight">
+                        Welcome back!</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-1">Here's a summary of your progress. Keep it up!</p>
+                </div>
+                <!-- Card (Hero Card) -->
+                <div
+                    class="flex items-stretch justify-between gap-6 rounded-xl bg-white dark:bg-[#1C2431] p-6 shadow-sm">
+                    <div class="flex flex-col gap-1 flex-1">
+                        <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Total Accumulated
+                            Points</p>
+                        <p id="total-points" class="text-primary text-3xl font-bold leading-tight">0 Points</p>
+                        <p id="user-rank" class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mt-1">Rank:
+                            Novice</p>
+                    </div>
+                    <div class="w-40 bg-center bg-no-repeat bg-contain"
+                        data-alt="Trophy illustration for gamification rank"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_HY4aehQn0ihn2SxUi12Bz-42ZHEMKIie4WBq5b4r63QoAyiqX3v-mUZoAzkz5CrUesIA_dD8p-wfVsO0vIRwYUxNfu7L7Imb9k1Zr8QX9Gj6H_q9zXq0jyp5jp615e7Wz8gK_v_F_mZKMT4TlacCnSRr30y5uj8s8LLioSKmjKyJ5d2S1B_1vDv3tNcVWtIGnWrKRXYbfnWEyhAyOxkuENUP5r6qEDYKjnQJFSbfycr8khlR2s6ciPAXRwPFRg2cj8eX2ocx-JrC");'>
+                    </div>
+                </div>
+                <!-- Charts Section -->
+                <div>
+                    <!-- SectionHeader -->
+                    <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-tight mb-4">
+                        Subject Accuracy</h2>
+                    <div class="rounded-xl bg-white dark:bg-[#1C2431] p-6 shadow-sm">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex flex-1 flex-col gap-2">
+                                <p class="text-gray-500 dark:text-gray-400 text-base font-medium leading-normal">Overall
+                                    Accuracy</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p id="overall-accuracy"
+                                        class="text-gray-900 dark:text-white tracking-light text-[32px] font-bold leading-tight truncate">
+                                        0%</p>
+                                </div>
+                                <div class="grid min-h-[180px] gap-x-4 gap-y-6 grid-cols-[auto_1fr] items-center py-3">
+                                    <p
+                                        class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-wide">
+                                        Physics</p>
+                                    <div class="h-2 flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
+                                        <div id="physics-accuracy-bar" class="bg-[#10B981] h-2 rounded-full" style="width: 0%;"></div>
+                                    </div>
+                                    <p
+                                        class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-wide">
+                                        Chemistry</p>
+                                    <div class="h-2 flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
+                                        <div id="chemistry-accuracy-bar" class="bg-[#3B82F6] h-2 rounded-full" style="width: 0%;"></div>
+                                    </div>
+                                    <p
+                                        class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-wide">
+                                        Math</p>
+                                    <div class="h-2 flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
+                                        <div id="math-accuracy-bar" class="bg-[#EF4444] h-2 rounded-full" style="width: 0%;"></div>
+                                    </div>
+                                    <p
+                                        class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal tracking-wide">
+                                        History</p>
+                                    <div class="h-2 flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
+                                        <div id="history-accuracy-bar" class="bg-[#8B5CF6] h-2 rounded-full" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress Rings Section -->
+                <div>
+                    <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-tight mb-4">
+                        Difficulty Completion</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div
+                            class="bg-white dark:bg-[#1C2431] rounded-xl p-6 flex flex-col items-center gap-3 shadow-sm">
+                            <div class="relative size-24">
+                                <svg class="size-full" height="36" viewbox="0 0 36 36" width="36"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="stroke-current text-gray-200 dark:text-gray-700" cx="18" cy="18"
+                                        fill="none" r="16" stroke-width="3"></circle>
+                                    <circle id="easy-ring" class="stroke-current text-emerald-500" cx="18" cy="18" fill="none" r="16"
+                                        stroke-dasharray="100" stroke-dashoffset="100" stroke-linecap="round"
+                                        stroke-width="3"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="easy-percent" class="text-lg font-bold text-gray-900 dark:text-white">0%</span>
+                                </div>
+                            </div>
+                            <p class="text-base font-medium text-gray-700 dark:text-gray-300">Easy</p>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1C2431] rounded-xl p-6 flex flex-col items-center gap-3 shadow-sm">
+                            <div class="relative size-24">
+                                <svg class="size-full" height="36" viewbox="0 0 36 36" width="36"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="stroke-current text-gray-200 dark:text-gray-700" cx="18" cy="18"
+                                        fill="none" r="16" stroke-width="3"></circle>
+                                    <circle id="medium-ring" class="stroke-current text-orange-400" cx="18" cy="18" fill="none" r="16"
+                                        stroke-dasharray="100" stroke-dashoffset="100" stroke-linecap="round"
+                                        stroke-width="3"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="medium-percent" class="text-lg font-bold text-gray-900 dark:text-white">0%</span>
+                                </div>
+                            </div>
+                            <p class="text-base font-medium text-gray-700 dark:text-gray-300">Medium</p>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1C2431] rounded-xl p-6 flex flex-col items-center gap-3 shadow-sm">
+                            <div class="relative size-24">
+                                <svg class="size-full" height="36" viewbox="0 0 36 36" width="36"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="stroke-current text-gray-200 dark:text-gray-700" cx="18" cy="18"
+                                        fill="none" r="16" stroke-width="3"></circle>
+                                    <circle id="hard-ring" class="stroke-current text-red-500" cx="18" cy="18" fill="none" r="16"
+                                        stroke-dasharray="100" stroke-dashoffset="100" stroke-linecap="round"
+                                        stroke-width="3"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="hard-percent" class="text-lg font-bold text-gray-900 dark:text-white">0%</span>
+                                </div>
+                            </div>
+                            <p class="text-base font-medium text-gray-700 dark:text-gray-300">Hard</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column -->
+            <div class="xl:col-span-1 flex flex-col gap-8">
+                <!-- Profile Avatar Card -->
+                <div class="bg-white dark:bg-[#1C2431] rounded-xl p-6 flex flex-col items-center shadow-sm">
+                    <div id="user-avatar" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-24 mb-4"
+                        data-alt="User avatar of Alex Johnson"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2yY48i-e_1V6KIbRpjUQCBklJrW6f67RN2aSw_PdwhvoXxYmWnCI_0HCIrbPEhxEPFwAKusm15FgyKR36_gyd-3OqgQ0yX3vGy6Z72faoQXkp5WNBzyVjRbE3XEMfmMJ-MRQVxKDp0VQRiDfXWtTPOQz-qfcAuYPhLLMXMg5gLYCsYugV22dMivLzsvZ42L1lKl0HJWhubWMYw7Ob13xjjnfHiCz_oYZ7vFeYGASYNSKYpxSo10bMB23d3Ldm7FWuvgA5XqNeqk-p");'>
+                    </div>
+                    <h3 id="user-display-name" class="text-xl font-bold text-gray-900 dark:text-white">User Name</h3>
+                    <p id="user-email" class="text-sm text-gray-500 dark:text-gray-400 mb-4">user@example.com</p>
+                    <button
+                        class="w-full bg-primary/20 hover:bg-primary/30 text-primary font-medium py-2 px-4 rounded-lg">Edit
+                        Profile</button>
+                </div>
+                <!-- Settings Toggles Card -->
+                <div class="bg-white dark:bg-[#1C2431] rounded-xl p-6 flex flex-col gap-4 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Quick Settings</h3>
+                    <div class="flex items-center justify-between">
+                        <label class="text-gray-700 dark:text-gray-300" for="email-notifications">Email
+                            Notifications</label>
+                        <button aria-checked="true"
+                            class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-primary transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark"
+                            id="email-notifications" role="switch" type="button">
+                            <span
+                                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="text-gray-700 dark:text-gray-300" for="dark-mode">Dark Mode</label>
+                        <button aria-checked="true"
+                            class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-primary transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark"
+                            id="dark-mode" role="switch" type="button">
+                            <span
+                                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="text-gray-700 dark:text-gray-300" for="sound-effects">Sound Effects</label>
+                        <button aria-checked="false"
+                            class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 dark:bg-gray-700 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark"
+                            id="sound-effects" role="switch" type="button">
+                            <span
+                                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Recent Activity Card -->
+                <div class="bg-white dark:bg-[#1C2431] rounded-xl p-6 flex flex-col gap-4 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Recent Activity</h3>
+                    <ul id="recent-activity-list" class="space-y-4">
+                        <p id="loading-activity" class="text-gray-500">Loading activity...</p>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Profile logic -->
+    <script type="module" src="./profile.js"></script>
+</body>
+
+</html>

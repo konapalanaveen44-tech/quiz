@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dashboard - Online Quiz Application</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4A90E2",
+                        "background-light": "#F4F6F8",
+                        "background-dark": "#111621",
+                        "text-light": "#333333",
+                        "text-dark": "#FFFFFF",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#181e29",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#3c4453",
+                        "success": "#7ED321",
+                        "warning": "#F5A623",
+                        "danger": "#fa6238"
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+    <div class="relative flex min-h-screen w-full">
+        <!-- SideNavBar -->
+        <aside
+            class="flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4 border-r border-border-light dark:border-border-dark sticky top-0">
+            <div class="flex items-center gap-2 mb-8 px-2">
+                <span class="material-symbols-outlined text-primary text-3xl">quiz</span>
+                <h1 class="text-xl font-bold">QuizApp</h1>
+            </div>
+            <div class="relative mb-4">
+                <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                <input
+                    class="w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark py-2 pl-10 pr-4 text-sm focus:border-primary focus:ring-primary"
+                    placeholder="Search subjects..." type="text" />
+            </div>
+            <div class="flex flex-1 flex-col justify-between">
+                <nav class="flex flex-col gap-1">
+                    <a class="flex items-center gap-3 rounded-lg bg-primary/20 px-3 py-2 text-primary" href="dashboard.html">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <p class="text-sm font-medium">Dashboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                        href="leaderboard.html">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">leaderboard</span>
+                        <p class="text-sm font-medium">Leaderboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                        href="physics_quiz.html">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">science</span>
+                        <p class="text-sm font-medium">Physics</p>
+                    </a>
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                        href="chemistry_quiz.html">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">biotech</span>
+                        <p class="text-sm font-medium">Chemistry</p>
+                    </a>
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                        href="mathematics_quiz.html">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">calculate</span>
+                        <p class="text-sm font-medium">Mathematics</p>
+                    </a>
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                        href="activity_history.html">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">history</span>
+                        <p class="text-sm font-medium">Quiz History</p>
+                    </a>
+                     <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                        href="profile.html">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">history_edu</span>
+                        <p class="text-sm font-medium">Profile</p>
+                    </a>
+                </nav>
+                <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-3 px-3 py-2 mb-4">
+                        <div id="user-avatar-sidebar" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                            data-alt="User avatar image"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCmZNn-WaZSVUfvVEQnURBnJ1zF-r0vPwRtzpg-z49487Dd-B_10tHcjTXLZU3t2uvVQ641xT-iF2jP3locq0jnMExmF62bxLrp6tVmIaApMOtdzfnuBZ6q3k6ByzHuxIhz2qLxKOXhGgUzZREKEAymNRFSG47VhkRZJ_gc_SqG8AsAlJABEOzFLttB-jb3o3eGr_D4cI3eDrb5-vt5TGJDEEXQjPfZQLzpAeAOEbrtJauuYCk5QnylVRHV8sXrY5_0Kzgzr6aVy3s");'>
+                        </div>
+                        <div class="flex flex-col">
+                            <h1 id="user-name-sidebar" class="text-sm font-semibold">User Name</h1>
+                            <p id="user-level-sidebar" class="text-gray-500 dark:text-gray-400 text-xs">Level 0</p>
+                        </div>
+                    </div>
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                        href="#">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">settings</span>
+                        <p class="text-sm font-medium">Settings</p>
+                    </a>
+                    <a id="logout-button" class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                        href="#">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">logout</span>
+                        <p class="text-sm font-medium">Logout</p>
+                    </a>
+                </div>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <!-- PageHeading -->
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+                    <div class="flex flex-col gap-1">
+                        <p id="welcome-message" class="text-3xl font-bold">Hello, User!</p>
+                        <p class="text-gray-500 dark:text-gray-400 text-base">Welcome back, let's keep learning!</p>
+                    </div>
+                    <button
+                        class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-sm font-bold shadow-md hover:bg-primary/90 transition-colors">
+                        <span class="material-symbols-outlined">add_circle</span>
+                        <span class="truncate">Start New Quiz</span>
+                    </button>
+                </div>
+                <!-- Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div
+                        class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark">
+                        <p class="text-base font-medium text-gray-500 dark:text-gray-400">Total Points Earned</p>
+                        <p id="total-points" class="tracking-light text-4xl font-bold">0</p>
+                    </div>
+                    <div
+                        class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark">
+                        <p class="text-base font-medium text-gray-500 dark:text-gray-400">Overall Accuracy</p>
+                        <p id="overall-accuracy" class="tracking-light text-4xl font-bold">0%</p>
+                    </div>
+                    <div
+                        class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark">
+                        <p class="text-base font-medium text-gray-500 dark:text-gray-400">Quizzes Completed</p>
+                        <p id="quizzes-completed" class="tracking-light text-4xl font-bold">0</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <!-- SectionHeader -->
+                        <h2 class="text-xl font-bold mb-4">Subject-wise Progress</h2>
+                        <!-- ListItems -->
+                        <div class="flex flex-col gap-2">
+                            <a href="physics_quiz.html"
+                                class="flex flex-col sm:flex-row items-center gap-4 bg-card-light dark:bg-card-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+                                <div
+                                    class="flex items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0 size-12">
+                                    <span class="material-symbols-outlined">science</span>
+                                </div>
+                                <div class="flex-1 text-center sm:text-left w-full">
+                                    <p class="text-base font-medium">Physics</p>
+                                    <p id="physics-stats" class="text-gray-500 dark:text-gray-400 text-sm">No quizzes taken yet.</p>
+                                </div>
+                                <div class="flex items-center gap-3 w-full sm:w-auto">
+                                    <div
+                                        class="w-full sm:w-28 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 h-2">
+                                        <div id="physics-progress" class="h-full rounded-full bg-success" style="width: 0%;"></div>
+                                    </div>
+                                    <p id="physics-progress-text" class="text-sm font-medium">0%</p>
+                                </div>
+                            </a>
+                            <a href="chemistry_quiz.html"
+                                class="flex flex-col sm:flex-row items-center gap-4 bg-card-light dark:bg-card-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+                                <div
+                                    class="flex items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0 size-12">
+                                    <span class="material-symbols-outlined">biotech</span>
+                                </div>
+                                <div class="flex-1 text-center sm:text-left w-full">
+                                    <p class="text-base font-medium">Chemistry</p>
+                                    <p id="chemistry-stats" class="text-gray-500 dark:text-gray-400 text-sm">No quizzes taken yet.</p>
+                                </div>
+                                <div class="flex items-center gap-3 w-full sm:w-auto">
+                                    <div
+                                        class="w-full sm:w-28 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 h-2">
+                                        <div id="chemistry-progress" class="h-full rounded-full bg-success" style="width: 0%;"></div>
+                                    </div>
+                                    <p id="chemistry-progress-text" class="text-sm font-medium">0%</p>
+                                </div>
+                            </a>
+                            <a href="mathematics_quiz.html"
+                                class="flex flex-col sm:flex-row items-center gap-4 bg-card-light dark:bg-card-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+                                <div
+                                    class="flex items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0 size-12">
+                                    <span class="material-symbols-outlined">calculate</span>
+                                </div>
+                                <div class="flex-1 text-center sm:text-left w-full">
+                                    <p class="text-base font-medium">Mathematics</p>
+                                    <p id="math-stats" class="text-gray-500 dark:text-gray-400 text-sm">No quizzes taken yet.</p>
+                                </div>
+                                <div class="flex items-center gap-3 w-full sm:w-auto">
+                                    <div
+                                        class="w-full sm:w-28 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 h-2">
+                                        <div id="math-progress" class="h-full rounded-full bg-warning" style="width: 0%;"></div>
+                                    </div>
+                                    <p id="math-progress-text" class="text-sm font-medium">0%</p>
+                                </div>
+                            </a>
+                            <a href="history_quiz.html"
+                                class="flex flex-col sm:flex-row items-center gap-4 bg-card-light dark:bg-card-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+                                <div
+                                    class="flex items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0 size-12">
+                                    <span class="material-symbols-outlined">history_edu</span>
+                                </div>
+                                <div class="flex-1 text-center sm:text-left w-full">
+                                    <p class="text-base font-medium">History</p>
+                                    <p id="history-stats" class="text-gray-500 dark:text-gray-400 text-sm">No quizzes taken yet.</p>
+                                </div>
+                                <div class="flex items-center gap-3 w-full sm:w-auto">
+                                    <div
+                                        class="w-full sm:w-28 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 h-2">
+                                        <div id="history-progress" class="h-full rounded-full bg-danger" style="width: 0%;"></div>
+                                    </div>
+                                    <p id="history-progress-text" class="text-sm font-medium">0%</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Difficulty Breakdown -->
+                    <div>
+                        <h2 class="text-xl font-bold mb-4">Difficulty Breakdown</h2>
+                        <div
+                            class="p-6 rounded-xl bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark">
+                            <div class="w-full h-48 relative flex items-center justify-center mb-4">
+                                <svg height="100%" viewbox="0 0 200 200" width="100%">
+                                    <!-- Background circle -->
+                                    <circle class="dark:stroke-[#3c4453]" cx="100" cy="100" fill="none" r="80"
+                                        stroke="#e5e7eb" stroke-width="20"></circle>
+                                    <!-- Segments (set to 0 initially) -->
+                                    <circle cx="100" cy="100" fill="none" r="80" stroke="#7ED321"
+                                        stroke-dasharray="0, 502.65" stroke-dashoffset="0" stroke-width="20"
+                                        transform="rotate(-90 100 100)"></circle> <!-- Easy: 58% (301.44)-->
+                                    <circle cx="100" cy="100" fill="none" r="80" stroke="#4A90E2"
+                                        stroke-dasharray="0, 502.65" stroke-dashoffset="0" stroke-width="20"
+                                        transform="rotate(-90 100 100)"></circle> <!-- Medium: 28% (141.37) -->
+                                    <circle cx="100" cy="100" fill="none" r="80" stroke="#F5A623"
+                                        stroke-dasharray="0, 502.65" stroke-dashoffset="0" stroke-width="20"
+                                        transform="rotate(-90 100 100)"></circle> <!-- Hard: 14% (70.68)-->
+                                    <text class="text-3xl font-bold fill-text-light dark:fill-text-dark"
+                                        text-anchor="middle" x="100" y="105">82%</text>
+                                    <text class="text-sm fill-gray-500 dark:fill-gray-400" text-anchor="middle" x="100"
+                                        y="125">Accuracy</text>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex items-center justify-between text-sm">
+                                    <div class="flex items-center gap-2">
+                                        <span class="size-3 rounded-full bg-success"></span>
+                                        <span>Easy</span>
+                                    </div>
+                                    <span class="font-medium">0% Accuracy</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <div class="flex items-center gap-2">
+                                        <span class="size-3 rounded-full bg-primary"></span>
+                                        <span>Medium</span>
+                                    </div>
+                                    <span class="font-medium">0% Accuracy</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <div class="flex items-center gap-2">
+                                        <span class="size-3 rounded-full bg-warning"></span>
+                                        <span>Hard</span>
+                                    </div>
+                                    <span class="font-medium">0% Accuracy</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Dashboard logic -->
+    <script type="module" src="./dashboard.js"></script>
+</body>
+
+</html>

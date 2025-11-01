@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quiz History - Quiz App</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2A4D8E",
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#111621",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1C2431",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#3c4453",
+                        "success": "#1DB954",
+                        "error": "#E53E3E",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark">
+    <div class="relative flex min-h-screen w-full">
+        <!-- SideNavBar -->
+        <aside
+            class="sticky top-0 h-screen w-64 bg-white dark:bg-[#1C2431] flex flex-col p-4 border-r border-gray-200 dark:border-gray-700">
+            <div class="flex items-center gap-3 mb-8 px-2">
+                <div class="text-white bg-primary rounded-lg p-2">
+                    <span class="material-symbols-outlined">quiz</span>
+                </div>
+                <h1 class="text-gray-900 dark:text-white text-xl font-bold leading-tight">QuizUp</h1>
+            </div>
+            <div class="flex flex-col gap-2 flex-grow">
+                <a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg" href="dashboard.html">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <p class="text-sm font-medium leading-normal">Dashboard</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="activity_history.html">
+                    <span class="material-symbols-outlined">history</span>
+                    <p class="text-sm font-medium leading-normal">Quiz History</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg" href="profile.html">
+                    <span class="material-symbols-outlined">person</span>
+                    <p class="text-sm font-medium leading-normal">Profile</p>
+                </a>
+            </div>
+            <div class="flex flex-col gap-1">
+                <a id="logout-button"
+                    class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg"
+                    href="#">
+                    <span class="material-symbols-outlined">logout</span>
+                    <p class="text-sm font-medium leading-normal">Logout</p>
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <div class="max-w-4xl mx-auto">
+                <!-- PageHeading -->
+                <div>
+                    <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-tight">
+                        My Quiz History</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-1">Review your past performance and see your progress over time.</p>
+                </div>
+
+                <!-- History List -->
+                <div id="history-container" class="mt-8 flex flex-col gap-4">
+                    <!-- History items will be dynamically inserted here -->
+                    <p id="loading-message" class="text-gray-500">Loading your history...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="./activity_history.js"></script>
+</body>
+
+</html>

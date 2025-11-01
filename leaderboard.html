@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Leaderboard - Quiz App</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4A90E2",
+                        "background-light": "#F4F6F8",
+                        "background-dark": "#111621",
+                        "text-light": "#333333",
+                        "text-dark": "#FFFFFF",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#181e29",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#3c4453",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+    <div class="relative flex min-h-screen w-full">
+        <!-- SideNavBar -->
+        <aside
+            class="flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4 border-r border-border-light dark:border-border-dark sticky top-0">
+            <div class="flex items-center gap-2 mb-8 px-2">
+                <span class="material-symbols-outlined text-primary text-3xl">quiz</span>
+                <h1 class="text-xl font-bold">QuizApp</h1>
+            </div>
+            <nav class="flex flex-1 flex-col gap-1">
+                <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10" href="dashboard.html">
+                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">dashboard</span>
+                    <p class="text-sm font-medium">Dashboard</p>
+                </a>
+                <a class="flex items-center gap-3 rounded-lg bg-primary/20 px-3 py-2 text-primary" href="leaderboard.html">
+                    <span class="material-symbols-outlined">leaderboard</span>
+                    <p class="text-sm font-medium">Leaderboard</p>
+                </a>
+                <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10" href="activity_history.html">
+                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">history</span>
+                    <p class="text-sm font-medium">Quiz History</p>
+                </a>
+                <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10" href="profile.html">
+                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">person</span>
+                    <p class="text-sm font-medium">Profile</p>
+                </a>
+            </nav>
+            <div class="flex flex-col gap-1">
+                 <a id="logout-button" class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-200 dark:hover:bg-white/10"
+                    href="#">
+                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">logout</span>
+                    <p class="text-sm font-medium">Logout</p>
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="max-w-4xl mx-auto flex flex-col gap-8">
+                <!-- My Progress Section -->
+                <div id="my-progress-section" class="bg-card-light dark:bg-card-dark p-6 rounded-xl border border-border-light dark:border-border-dark" style="display: none;">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-lg font-bold">My Progress to Next Level</h3>
+                        <p id="progress-text" class="text-sm text-gray-500 dark:text-gray-400">0 / 100 Points</p>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div id="progress-bar" class="bg-primary h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- PageHeading -->
+                <div>
+                    <h1 class="text-4xl font-bold tracking-tight">Leaderboard</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-1">See who's at the top of their game.</p>
+                </div>
+
+                <!-- Leaderboard List -->
+                <div class="flex flex-col gap-3">
+                    <!-- Header -->
+                    <div class="flex items-center px-4 py-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        <div class="w-16 text-center">Rank</div>
+                        <div class="flex-1 pl-2">Player</div>
+                        <div class="w-32 text-right">Points</div>
+                    </div>
+                    <!-- Container for user rows -->
+                    <div id="leaderboard-container" class="flex flex-col gap-3">
+                        <p id="loading-leaderboard" class="text-gray-500 dark:text-gray-400 p-4">Loading leaderboard...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="./leaderboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login / Register</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2A4D8E",
+                        "background-light": "#F4F7F9",
+                        "background-dark": "#111621",
+                        "accent": "#F7B801",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark">
+    <div class="relative flex min-h-screen w-full flex-col group/design-root">
+        <div class="flex flex-1 w-full">
+            <div class="flex flex-col lg:flex-row w-full">
+                <!-- Left Visual Panel -->
+                <div
+                    class="relative hidden lg:flex flex-col items-center justify-center w-full lg:w-1/2 bg-[#1c1f26] p-10">
+                    <div class="flex flex-col gap-6 max-w-md text-center">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-contain"
+                            data-alt="An abstract illustration representing learning and achievement, with stylized brain and lightbulb motifs."
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDoZmu2KH8Hfebkc6d2yWl5MooGW7wA6WzInNro_5lNK8nQXpCCl6UayTnPoZpy6fDWTQIvRaP866vtBxiU5lqIzlhkDA95xTBn_faw-PR31HphrOLjDuG5kViJsnercH68Jefy7sbJtE0b5JikdsDrIv0FBqPS5Uu5J-D6Oth1ON4-LwctyT-8EAp0uif1dFy6eZIBVJaUvfvBtOCuaA9HhPW8-Q0FpJHJ5BABz_O1r5cdgpTL0vCMfc8Gu1LkgaBXyS4_Frf3Mj7f');">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] xl:text-5xl">
+                                Unlock Your Potential</h1>
+                            <h2 class="text-slate-300 text-base font-normal leading-normal xl:text-lg">Your path to
+                                success starts here.</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Form Panel -->
+                <div class="flex w-full lg:w-1/2 items-center justify-center p-6 sm:p-8 lg:p-12">
+                    <div class="flex flex-col w-full max-w-md gap-8">
+                        <div>
+                            <div class="flex border-b border-slate-300 dark:border-slate-700 gap-8">
+                                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent pb-3 pt-2"
+                                    href="login.html">
+                                    <p
+                                        class="text-slate-500 dark:text-slate-400 text-sm font-bold leading-normal tracking-[0.015em]">
+                                        Log In</p>
+                                </a>
+                                <a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary pb-3 pt-2 text-slate-800 dark:text-white"
+                                    href="#">
+                                    <p class="text-sm font-bold leading-normal tracking-[0.015em]">Register</p>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Register Form -->
+                        <div class="flex flex-col gap-6">
+                            <div class="flex flex-wrap justify-between gap-3">
+                                <p
+                                    class="text-slate-900 dark:text-white tracking-light text-3xl font-bold leading-tight">
+                                    Create an Account</p>
+                            </div>
+                            <form id="register-form" class="flex flex-col gap-5" novalidate>
+                                <label class="flex flex-col flex-1">
+                                    <p class="text-slate-800 dark:text-white text-sm font-medium leading-normal pb-2">
+                                        Full Name</p>
+                                    <input id="register-name"
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 focus:border-primary h-12 placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 py-2.5 text-base font-normal leading-normal"
+                                        placeholder="Enter your full name" type="text" value="" required />
+                                </label>
+                                <label class="flex flex-col flex-1">
+                                    <p class="text-slate-800 dark:text-white text-sm font-medium leading-normal pb-2">
+                                        Email Address</p>
+                                    <input id="register-email"
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 focus:border-primary h-12 placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 py-2.5 text-base font-normal leading-normal"
+                                        placeholder="Enter your email" type="email" value="" required />
+                                </label>
+                                <label class="flex flex-col flex-1">
+                                    <p class="text-slate-800 dark:text-white text-sm font-medium leading-normal pb-2">
+                                        Password</p>
+                                    <div class="relative flex w-full flex-1 items-stretch">
+                                        <input id="register-password"
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 focus:border-primary h-12 placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 py-2.5 text-base font-normal leading-normal"
+                                            placeholder="Create a password" type="password" value="" required />
+                                        <button
+                                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500 dark:text-slate-400 cursor-pointer"
+                                            type="button" id="toggle-password">
+                                            <span class="material-symbols-outlined" id="toggle-icon">visibility_off</span>
+                                        </button>
+                                    </div>
+                                </label>
+                                <button
+                                    class="flex min-w-[84px] max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark"
+                                    type="submit">
+                                    <span class="truncate">Create Account</span>
+                                </button>
+                            </form>
+                            <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Already have an account? <a href="login.html" class="text-primary font-medium">Log In</a></p>
+                        </div>
+                        <!-- Social Logins -->
+                        <div class="flex flex-col gap-4">
+                            <div class="relative flex items-center justify-center">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-slate-300 dark:border-slate-700"></div>
+                                </div>
+                                <div
+                                    class="relative bg-background-light dark:bg-background-dark px-2 text-sm text-slate-500 dark:text-slate-400">
+                                    Or continue with</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <button id="google-signin"
+                                    class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700">
+                                    <img alt="Google logo" class="h-5 w-5"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4ELCiqeBSxZjgofF5XO4et6n_XgUtxX5w9pomYbbhzUNp01EGQg1xMf1nZg_sqxZwqRspnTqwwL15leCkBVz4_lLogVFCMh03yUnxeD1hjW-mh30cev0cjAoqaWm5KiCVBjTrYdaZplEcB9DKR9h0h8us2a2pNu1bu6yYGHtplTejzsw8MluhI-7EtbU6c95Pwdg2MM01s_dWm4ehXPKwcpqYEjMJffV5PDwCyR7Cqdfz6bkvwq-R7w_hIT9n1bvD7n046_sriipI" />
+                                    <span
+                                        class="truncate text-sm font-medium text-slate-800 dark:text-white">Google</span>
+                                </button>
+                                <button id="facebook-signin"
+                                    class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700">
+                                    <img alt="Facebook logo" class="h-5 w-5"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVzUVjfNPnuKA7mPTIomx4EKfP7QdOSrIWS66ZaUSij3Y-Y-MRj3ISPypFsLWm13eEDgXDfn_QjxiVDI1vxwhMQMjxfsDVk41hjF9Kk4AdcY6ty-QhYBxXMriDSpVRMgb3FznUW3QeKD1LPJmzKV7V7cssYEYnDAn6fezA1aRVaBHsbxfnztht7r54jpT8BGBERYt-Sme6TtQmPBbvyjZYMCupY2P-gky6EE0BmSQIsbCXAPn_4b8ASHSxYqsrlAe2jC4EQH1t3atp" />
+                                    <span
+                                        class="truncate text-sm font-medium text-slate-800 dark:text-white">Facebook</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Basic UI helpers: toggle password visibility
+        document.getElementById('toggle-password')?.addEventListener('click', () => {
+            const pw = document.getElementById('register-password');
+            const icon = document.getElementById('toggle-icon');
+            if (!pw) return;
+            if (pw.type === 'password') {
+                pw.type = 'text';
+                if (icon) icon.textContent = 'visibility';
+            } else {
+                pw.type = 'password';
+                if (icon) icon.textContent = 'visibility_off';
+            }
+        });
+    </script>
+
+    <!-- Auth logic (login/register handlers, redirects) -->
+    <script type="module" src="./auth.js"></script>
+</body>
+
+</html>
