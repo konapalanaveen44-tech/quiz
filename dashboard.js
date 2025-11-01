@@ -31,24 +31,37 @@ const historyStats = document.getElementById('history-stats');
 const historyProgress = document.getElementById('history-progress');
 const historyProgressText = document.getElementById('history-progress-text');
 
+// Quiz Links
+const physicsLink = document.getElementById('physics-quiz-link');
+const chemistryLink = document.getElementById('chemistry-quiz-link');
+const mathLink = document.getElementById('mathematics-quiz-link');
+const historyLink = document.getElementById('history-quiz-link');
+
+// Disable links initially to prevent clicking before data is loaded
+const quizLinks = [physicsLink, chemistryLink, mathLink, historyLink];
+quizLinks.forEach(link => {
+    if (link) link.classList.add('pointer-events-none', 'opacity-50');
+});
+
 
 // Default values
 const defaultAvatar = 'https://lh3.googleusercontent.com/a/ACg8ocJ-0_v4s-Co32-QdI-fM2Tsf1iT2x-32l2wO9Ml7dM=s96-c'; // A generic avatar
+
+// Define level thresholds to match leaderboard.js
+const levelThresholds = [
+    { level: 0, points: 0 },
+    { level: 1, points: 101 },
+    { level: 2, points: 251 },
+    { level: 3, points: 501 },
+    { level: 4, points: 1001 },
+    { level: 5, points: 2001 } 
+];
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         // User is signed in
         console.log('User is logged in:', user);
 
-        const displayName = user.displayName || 'User';
-        const photoURL = user.photoURL || defaultAvatar;
-
-        // Update Welcome Message
-        if (welcomeMessage) welcomeMessage.textContent = `Hello, ${displayName}!`;
-
-        // Update Sidebar
-        if (userNameSidebar) userNameSidebar.textContent = displayName;
-        if (userAvatarSidebar) userAvatarSidebar.style.backgroundImage = `url('${photoURL}')`;
 
         // Fetch user's aggregated stats from their document
         const userDocRef = doc(db, "users", user.uid);
@@ -58,21 +71,40 @@ onAuthStateChanged(auth, async (user) => {
             const userData = userDocSnap.data();
             const userTotalPoints = userData.totalPoints || 0;
 
+            // Use Firestore name as the primary source, fallback to auth, then 'User'
+            const displayName = userData.name || user.displayName || 'User';
+            const photoURL = userData.photoURL || user.photoURL || defaultAvatar;
+
+            // Update Welcome Message
+            if (welcomeMessage) welcomeMessage.textContent = `Hello, ${displayName}!`;
+
+            // Update Sidebar
+            if (userNameSidebar) userNameSidebar.textContent = displayName;
+            if (userAvatarSidebar) userAvatarSidebar.style.backgroundImage = `url('${photoURL}')`;
+
             if (quizzesCompleted) quizzesCompleted.textContent = userData.quizzesCompleted || 0;
             if (totalPoints) totalPoints.textContent = userTotalPoints;
             if (overallAccuracy) overallAccuracy.textContent = `${(userData.overallAccuracy || 0).toFixed(0)}%`;
 
             // --- Level Calculation ---
-            let level = 0;
-            if (userTotalPoints > 1000) level = 5;
-            else if (userTotalPoints > 500) level = 4;
-            else if (userTotalPoints > 250) level = 3;
-            else if (userTotalPoints > 100) level = 2;
-            else if (userTotalPoints > 0) level = 1;
-
+            const currentLevelInfo = levelThresholds.slice().reverse().find(l => userTotalPoints >= l.points);
+            const level = currentLevelInfo ? currentLevelInfo.level : 0;
             if (userLevelSidebar) {
                 userLevelSidebar.textContent = `Level ${level}`;
             }
+
+            // --- Update Quiz Links based on user's level ---
+            const subjectLevels = userData.subjectLevels || {};
+            if (physicsLink) physicsLink.href = `physics_quiz.html?difficulty=${subjectLevels.Physics || 'Easy'}`;
+            if (chemistryLink) chemistryLink.href = `chemistry_quiz.html?difficulty=${subjectLevels.Chemistry || 'Easy'}`;
+            if (mathLink) mathLink.href = `mathematics_quiz.html?difficulty=${subjectLevels.Mathematics || 'Easy'}`;
+            if (historyLink) historyLink.href = `history_quiz.html?difficulty=${subjectLevels.History || 'Easy'}`;
+
+            // Re-enable the links now that they have the correct href
+            quizLinks.forEach(link => {
+                if (link) link.classList.remove('pointer-events-none', 'opacity-50');
+            });
+
         }
 
         // Fetch all quiz results for the user to calculate subject-specific stats

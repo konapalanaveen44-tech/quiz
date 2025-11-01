@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -25,6 +25,16 @@
                     borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
                 },
             },
+        }
+    </script>
+    <script>
+        // Prevents FOUC (Flash of Unstyled Content)
+        const savedTheme = localStorage.getItem('quizAppTheme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     </script>
     <style>
@@ -61,11 +71,6 @@
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="profile.html">
                     <span class="material-symbols-outlined">person</span>
                     <p class="text-sm font-medium leading-normal">Profile Details</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg"
-                    href="#">
-                    <span class="material-symbols-outlined">settings</span>
-                    <p class="text-sm font-medium leading-normal">Settings</p>
                 </a>
             </div>
             <div class="flex flex-col gap-1">
@@ -215,9 +220,9 @@
                     </div>
                     <h3 id="user-display-name" class="text-xl font-bold text-gray-900 dark:text-white">User Name</h3>
                     <p id="user-email" class="text-sm text-gray-500 dark:text-gray-400 mb-4">user@example.com</p>
-                    <button
-                        class="w-full bg-primary/20 hover:bg-primary/30 text-primary font-medium py-2 px-4 rounded-lg">Edit
-                        Profile</button>
+                    <a href="edit_profile.html"
+                        class="w-full text-center bg-primary/20 hover:bg-primary/30 text-primary font-medium py-2 px-4 rounded-lg">
+                        Edit Profile</a>
                 </div>
                 <!-- Settings Toggles Card -->
                 <div class="bg-white dark:bg-[#1C2431] rounded-xl p-6 flex flex-col gap-4 shadow-sm">

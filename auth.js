@@ -53,113 +53,120 @@ if (loginForm) {
 
 // --- Register with Email and Password ---
 if (registerForm) {
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = document.getElementById('register-name').value;
         const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-password').value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
-                // Update profile with display name
-                updateProfile(user, {
-                    displayName: name
-                });
-                // Create a document for the user in Firestore
-                return setDoc(doc(db, "users", user.uid), {
-                    uid: user.uid,
-                    name: name,
-                    email: email,
-                    createdAt: serverTimestamp(),
-                    totalPoints: 0,
-                    quizzesCompleted: 0,
-                    overallAccuracy: 0
-                });
-            })
-            .then(() => {
-                console.log('User created and data saved to Firestore.');
-                window.location.href = 'profile.html'; // Redirect after profile update
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(`Error: ${errorMessage}`);
+        try {
+            // 1. Create the user in Firebase Auth
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // 2. Update the user's profile with their name
+            await updateProfile(user, { displayName: name });
+
+            // 3. Create the user document in Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                name: name,
+                email: email,
+                createdAt: serverTimestamp(),
+                totalPoints: 0,
+                quizzesCompleted: 0,
+                    overallAccuracy: 0,
+                    subjectLevels: {
+                        Physics: 'Easy',
+                        Chemistry: 'Easy',
+                        Mathematics: 'Easy',
+                        History: 'Easy'
+                    }
             });
+
+            console.log('User created and data saved to Firestore.');
+            window.location.href = 'profile.html'; // Redirect after all operations are successful
+        } catch (error) {
+            const errorMessage = error.message;
+            alert(`Registration Error: ${errorMessage}`);
+        }
     });
 }
 
 // --- Google Sign-In ---
 if (googleSignInButton) {
-    googleSignInButton.addEventListener('click', () => {
+    googleSignInButton.addEventListener('click', async () => {
         const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const user = result.user;
-                const userRef = doc(db, "users", user.uid);
-                return getDoc(userRef).then(docSnap => {
-                    if (!docSnap.exists()) {
-                        // User is new, create a document for them
-                        console.log('First time Google sign-in, creating user document.');
-                        return setDoc(userRef, {
-                            uid: user.uid,
-                            // Ensure name is never null. Fallback to creating from email.
-                            name: user.displayName || (user.email ? user.email.split('@')[0] : 'User'),
-                            email: user.email || '',
-                            createdAt: serverTimestamp(),
-                            totalPoints: 0,
-                            quizzesCompleted: 0,
-                            overallAccuracy: 0
-                        });
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const userRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(userRef);
+
+            if (!docSnap.exists()) {
+                console.log('First time Google sign-in, creating user document.');
+                await setDoc(userRef, {
+                    uid: user.uid,
+                    name: user.displayName || (user.email ? user.email.split('@')[0] : 'User'),
+                    email: user.email || '',
+                    createdAt: serverTimestamp(),
+                    totalPoints: 0,
+                    quizzesCompleted: 0,
+                    overallAccuracy: 0,
+                    subjectLevels: {
+                        Physics: 'Easy',
+                        Chemistry: 'Easy',
+                        Mathematics: 'Easy',
+                        History: 'Easy'
                     }
-                }).then(() => {
-                    console.log('Google sign-in successful:', user);
-                    window.location.href = 'profile.html';
                 });
-            }).catch((error) => {
-                const errorMessage = error.message;
-                alert(`Google Sign-In Error: ${errorMessage}`);
-            });
+            }
+            console.log('Google sign-in successful:', user);
+            window.location.href = 'profile.html';
+        } catch (error) {
+            const errorMessage = error.message;
+            alert(`Google Sign-In Error: ${errorMessage}`);
+        }
     });
 }
 
 // --- Facebook Sign-In ---
 if (facebookSignInButton) {
-    facebookSignInButton.addEventListener('click', () => {
+    facebookSignInButton.addEventListener('click', async () => {
         const provider = new FacebookAuthProvider();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const user = result.user;
-                const userRef = doc(db, "users", user.uid);
-                return getDoc(userRef).then(docSnap => {
-                    if (!docSnap.exists()) {
-                        // User is new, create a document for them
-                        console.log('First time Facebook sign-in, creating user document.');
-                        return setDoc(userRef, {
-                            uid: user.uid,
-                            // Ensure name is never null. Fallback to creating from email.
-                            name: user.displayName || (user.email ? user.email.split('@')[0] : 'User'),
-                            email: user.email || '',
-                            createdAt: serverTimestamp(),
-                            totalPoints: 0,
-                            quizzesCompleted: 0,
-                            overallAccuracy: 0
-                        });
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const userRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(userRef);
+
+            if (!docSnap.exists()) {
+                console.log('First time Facebook sign-in, creating user document.');
+                await setDoc(userRef, {
+                    uid: user.uid,
+                    name: user.displayName || (user.email ? user.email.split('@')[0] : 'User'),
+                    email: user.email || '',
+                    createdAt: serverTimestamp(),
+                    totalPoints: 0,
+                    quizzesCompleted: 0,
+                    overallAccuracy: 0,
+                    subjectLevels: {
+                        Physics: 'Easy',
+                        Chemistry: 'Easy',
+                        Mathematics: 'Easy',
+                        History: 'Easy'
                     }
-                }).then(() => {
-                    console.log('Facebook sign-in successful:', user);
-                    window.location.href = 'profile.html';
                 });
-            })
-            .catch((error) => {
-                // Handle common errors
-                if (error.code === 'auth/account-exists-with-different-credential') {
-                    alert('An account already exists with the same email address. Please sign in with the original method.');
-                } else {
-                    const errorMessage = error.message;
-                    alert(`Facebook Sign-In Error: ${errorMessage}`);
-                }
-            });
+            }
+            console.log('Facebook sign-in successful:', user);
+            window.location.href = 'profile.html';
+        } catch (error) {
+            if (error.code === 'auth/account-exists-with-different-credential') {
+                alert('An account already exists with the same email address. Please sign in with the original method.');
+            } else {
+                const errorMessage = error.message;
+                alert(`Facebook Sign-In Error: ${errorMessage}`);
+            }
+        }
     });
 }

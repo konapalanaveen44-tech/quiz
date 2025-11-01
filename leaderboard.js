@@ -18,7 +18,7 @@ const levelThresholds = [
     { level: 2, points: 251 },
     { level: 3, points: 501 },
     { level: 4, points: 1001 },
-    { level: 5, points: 2001 } // Add more levels as needed
+    { level: 5, points: 2001 } 
 ];
 
 onAuthStateChanged(auth, async (user) => {
@@ -40,8 +40,6 @@ onAuthStateChanged(auth, async (user) => {
             const isCurrentUser = userData.uid === user.uid;
             const userTotalPoints = userData.totalPoints || 0;
 
-            const photoURL = userData.photoURL || defaultAvatar;
-
             // --- Improved Name Display ---
             let displayName = userData.name || 'Anonymous';
             if (displayName === 'Anonymous' && userData.email) {
@@ -50,6 +48,9 @@ onAuthStateChanged(auth, async (user) => {
                 // Capitalize the first letter
                 displayName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
             }
+
+            // Use photoURL from Firestore doc, or from Auth user object, or default
+            const photoURL = userData.photoURL || user.photoURL || defaultAvatar;
 
             // --- Level Calculation ---
             let currentLevelInfo = levelThresholds.slice().reverse().find(l => userTotalPoints >= l.points);

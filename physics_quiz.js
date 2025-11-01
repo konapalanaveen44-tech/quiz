@@ -1,39 +1,7 @@
 import { auth, db } from './firebase_cofig.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 import { doc, setDoc, collection, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-
-export const questions = [
-    {
-        question: "What is the SI unit of force?",
-        options: ["Watt", "Newton", "Joule", "Pascal"],
-        answer: "Newton",
-        points: 10
-    },
-    {
-        question: "Which law of motion states that for every action, there is an equal and opposite reaction?",
-        options: ["First Law", "Second Law", "Third Law", "Law of Gravitation"],
-        answer: "Third Law",
-        points: 10
-    },
-    {
-        question: "What is the formula for calculating kinetic energy?",
-        options: ["mgh", "1/2 mv^2", "ma", "F/d"],
-        answer: "1/2 mv^2",
-        points: 15
-    },
-    {
-        question: "The bending of light as it passes from one medium to another is called?",
-        options: ["Reflection", "Refraction", "Diffraction", "Interference"],
-        answer: "Refraction",
-        points: 10
-    },
-    {
-        question: "What type of energy is stored in a battery?",
-        options: ["Kinetic Energy", "Potential Energy", "Chemical Energy", "Mechanical Energy"],
-        answer: "Chemical Energy",
-        points: 15
-    }
-];
+import { questions as allQuestions } from './physics_questions.js';
 
 const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
@@ -44,14 +12,23 @@ const progressBar = document.getElementById('progress-bar');
 const questionCounter = document.getElementById('question-counter');
 const timerEl = document.getElementById('timer');
 
+let questions = [];
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let currentUser = null;
 let timerInterval = null;
+let startTime = null;
+let difficulty = 'Easy';
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         currentUser = user;
+        const urlParams = new URLSearchParams(window.location.search);
+        difficulty = urlParams.get('difficulty') || 'Easy';
+        questions = allQuestions[difficulty] || allQuestions['Easy'];
+        document.getElementById('quiz-title').textContent = `Physics Quiz (${difficulty})`;
+
+        startTime = new Date(); // Record start time
         loadQuestion();
         startTimer();
     } else {
@@ -131,6 +108,9 @@ nextButton.addEventListener('click', () => {
 
 submitButton.addEventListener('click', async () => {
     clearInterval(timerInterval); // Stop the timer
+    const endTime = new Date();
+    const timeTakenInSeconds = Math.round((endTime - startTime) / 1000);
+
     let score = 0;
     let totalPoints = 0;
     questions.forEach((q, index) => {
@@ -151,7 +131,8 @@ submitButton.addEventListener('click', async () => {
         points: totalPoints,
         createdAt: serverTimestamp(),
         answers: userAnswers,
-        difficulty: 'Easy' // Add difficulty
+        difficulty: difficulty,
+        timeTaken: timeTakenInSeconds
     };
 
     try {
@@ -170,7 +151,11 @@ submitButton.addEventListener('click', async () => {
                 userData = {
                     quizzesCompleted: 0,
                     totalPoints: 0,
-                    overallAccuracy: 0
+                    overallAccuracy: 0,
+                    uid: currentUser.uid,
+                    name: currentUser.displayName || 'Anonymous',
+                    email: currentUser.email,
+                    createdAt: serverTimestamp()
                 };
             } else {
                 userData = userDoc.data();
@@ -181,12 +166,22 @@ submitButton.addEventListener('click', async () => {
             // A more robust accuracy calculation would weigh by number of questions
             const newOverallAccuracy = ((userData.overallAccuracy || 0) * (newQuizzesCompleted - 1) + accuracy) / newQuizzesCompleted;
 
+            // --- Level Progression Logic ---
+            const subjectLevels = userData.subjectLevels || {};
+            if (difficulty === 'Easy' && accuracy === 100) {
+                subjectLevels.Physics = 'Medium';
+            } else if (difficulty === 'Medium' && accuracy === 100) { // Only upgrade to Hard if Medium is perfected
+                subjectLevels.Physics = 'Hard';
+            }
+
             // Use set with merge:true to create or update the document.
-            transaction.set(userRef, { 
+            transaction.set(userRef, {
+                ...userData, // Preserve existing fields like name, email, etc.
                 quizzesCompleted: newQuizzesCompleted,
                 totalPoints: newTotalPoints,
-                overallAccuracy: newOverallAccuracy
-            }, { merge: true });
+                overallAccuracy: newOverallAccuracy,
+                subjectLevels: subjectLevels
+            });
 
             transaction.set(resultRef, result);
         });
